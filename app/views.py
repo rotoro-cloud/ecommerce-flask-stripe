@@ -73,8 +73,8 @@ def create_user():
     
     if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
         create_database(app.config['SQLALCHEMY_DATABASE_URI'])
-    
-    user = User(username="username", email="email", password="password")
+
+    user = User(username=app.config['DB_USERNAME'], email="email", password=app.config['DB_PASSWORD'])
     db.create_all()
     db.session.add(user)
     db.session.commit()
