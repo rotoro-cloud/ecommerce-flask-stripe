@@ -9,6 +9,7 @@ import base64
 #import sqlite3 as sql
 
 # Flask modules
+from sqlalchemy_utils import database_exists, create_database
 from flask   import render_template, request, jsonify, redirect, g, url_for
 from jinja2  import TemplateNotFound
 from flask_login import login_required, logout_user, current_user, login_user
