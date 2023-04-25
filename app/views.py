@@ -5,8 +5,8 @@ Copyright (c) 2019 - present AppSeed.us
 
 import os, json
 import base64
-import sqlite3
-import sqlite3 as sql
+#import sqlite3
+#import sqlite3 as sql
 
 # Flask modules
 from flask   import render_template, request, jsonify, redirect, g, url_for
@@ -53,22 +53,25 @@ def logout():
     logout_user()
     return redirect('/')
 
-/*
-@app.cli.command("create-user")
-def create_user():
-    username = input("Username: ")
-    email = input("Email: ")
-    password = input("Password: ")
 
-    user = User(username=username, email=email, password=password)
-    db.create_all()
-    db.session.add(user)
-    db.session.commit()
+#@app.cli.command("create-user")
+#def create_user():
+#    username = input("Username: ")
+#    email = input("Email: ")
+#    password = input("Password: ")
+
+#    user = User(username=username, email=email, password=password)
+#    db.create_all()
+#    db.session.add(user)
+#    db.session.commit()
     
-*/ 
+
 # create the DB on demand
 @app.before_first_request
 def create_user():
+    
+    if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+        create_database(app.config['SQLALCHEMY_DATABASE_URI'])
     
     user = User(username="username", email="email", password="password")
     db.create_all()
