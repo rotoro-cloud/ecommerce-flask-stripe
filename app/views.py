@@ -53,6 +53,7 @@ def logout():
     logout_user()
     return redirect('/')
 
+/*
 @app.cli.command("create-user")
 def create_user():
     username = input("Username: ")
@@ -60,6 +61,16 @@ def create_user():
     password = input("Password: ")
 
     user = User(username=username, email=email, password=password)
+    db.create_all()
+    db.session.add(user)
+    db.session.commit()
+    
+*/ 
+# create the DB on demand
+@app.before_first_request
+def create_user():
+    
+    user = User(username="username", email="email", password="password")
     db.create_all()
     db.session.add(user)
     db.session.commit()
