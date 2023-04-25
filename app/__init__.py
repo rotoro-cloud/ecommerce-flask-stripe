@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 # load Configuration
 app.config.from_object( Config ) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + app.config['DB_USERNAME'] + ':' + app.config['DB_PASSWORD'] + '@' + app.config['DB_HOST'] + '/' + app.config['DB_NAME']
 
 login_manager = LoginManager()
 login_manager.init_app(app)
