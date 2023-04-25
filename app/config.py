@@ -23,8 +23,8 @@ class Config(object):
         STRIPE_IS_ACTIVE = True
         
     # App Config - mysql
-    DB_USERNAME = os.getenv('DB_NAME', 'max')
-    DB_PASSWORD = os.getenv('DB_NAME', 'maxPass12(#')
+    DB_USERNAME = os.getenv('DB_USERNAME', 'max')
+    DB_PASSWORD = os.getenv('DB_PASSWORD', 'maxPass12(#')
     DB_NAME = os.getenv('DB_NAME', 'store')
-    DB_HOST = os.getenv('DB_NAME', 'localhost')
+    DB_HOST = os.getenv('DB_HOST', 'localhost')
         
