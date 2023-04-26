@@ -132,8 +132,15 @@ sudo systemctl  enable  mysqld
 
 Попробуем uncomlicated - пок не проверено
 
+На вебе
 sudo ufw default deny
 sudo ufw allow 9090
+sudo ufw allow 22
+sudo ufw enable
+
+На базе
+sudo ufw default deny
+sudo ufw allow from app01 to any port 3306
 sudo ufw allow 22
 sudo ufw enable
 
