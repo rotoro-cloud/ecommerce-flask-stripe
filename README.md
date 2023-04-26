@@ -130,6 +130,14 @@ sudo systemctl  enable  mysqld
 
 :TODO ПРОВЕРИТЬ! ПОХЖЕ НФТЭЙБЛ только в виртуалке!
 
+Попробуем uncomlicated - пок не проверено
+
+sudo ufw default deny
+sudo ufw allow 9090
+sudo ufw allow 22
+sudo ufw enable
+
+
 Установи FirewallD на нужных серверах
 ---
 ```
