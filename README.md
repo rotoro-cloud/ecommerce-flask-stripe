@@ -21,7 +21,7 @@
 Если установка с единой компоновкой, мы переходим на `srv01`, иначе на `db01`
 
 ```
-ssh srv01
+ssh produser@srv01
 ```
 
 Установка Mysql
@@ -38,14 +38,14 @@ sudo systemctl  enable  mysqld
 ---
 
 ```
-sudo cat  /var/log/mysqld.log
+sudo  cat  /var/log/mysqld.log
 ```
 
 Настройка базы
 ---
 
 ```
-CREATE USER  "produser"@"%"  IDENTIFIED  BY  "rea11yStrongAndl0ngPassvvord";
+CREATE  USER  "produser"@"%"  IDENTIFIED  BY  "rea11yStrongAndl0ngPassvvord";
 GRANT  ALL PRIVILEGES  ON  ecommerce.*  TO  "produser"@"%";
 ```
 
@@ -55,35 +55,36 @@ GRANT  ALL PRIVILEGES  ON  ecommerce.*  TO  "produser"@"%";
 Если установка с распределенной компоновкой, мы переходим на `app01`
 
 ```
-ssh app01
+ssh  produser@app01
 ```
 
 
 Установка зависимостей Python
 ---
 ```
-sudo yum -y install gcc python-devel mysql-devel 
+sudo  yum  -y  install  gcc  python-devel mysql-devel 
 ```
 
 Установка Git
 ---
 ```
-sudo yum install git -y
-git clone https://github.com/rotoro-cloud/ecommerce-flask-stripe.git
+sudo  yum  install  git  -y
+git  clone  https://github.com/rotoro-cloud/ecommerce-flask-stripe.git
 ```
 
 Разрешение зависимостей приложения
 ---
 ```
-cd ecommerce-flask-stripe/
-pip install -r requirements.txt
+mv  ecommerce-flask-stripe/ ecommerce
+cd  ecommerce-flask-stripe/
+pip  install  -r  requirements.txt
 ```
 
 Установка переменных окружения приложения
 ---
 ```
-cp env.sample .env
-vi .env
+cp  env.sample  .env
+vi  .env
 ```
 
 >🖊️ Исправь данные на те, которые раньше установил в `MySQL`
@@ -91,32 +92,63 @@ vi .env
 Запусти девелоперский сервер для проверки
 ---
 ```
-flask run --host="0.0.0.0" --port="9090"
+flask  run  --host="0.0.0.0"  --port="9090"
 ```
 
 >‼️ Зайди в браузер, если ты видишь страницу, значит связь с базой настроена верно.
 
+Проверь запуск приложения в продуктовом веб-сервере с 3-я вокрерами
+---
+```
+gunicorn  --bind  0.0.0.0:9090  run:app  -w  3
+```
 
-ПРОВЕРИТЬ! ПОХЖЕ НФТЭЙБЛ только в виртуалке!
+Создай файл службы для `gunicorn`
+---
+>‼️ Следуй этому шаблону для файла `/etc/systemd/system/ecommerce.service`
+```
+[Unit]
+Description=Gunicorn-server for ecommerce
+After=network.target
+
+[Service]
+User=produser
+WorkingDirectory=/home/produser/ecommerce
+ExecStart=gunicorn --bind  0.0.0.0:9090  run:app  -w  3
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Активация службы веб-сервера
+---
+```
+sudo systemctl  start  mysqld
+sudo systemctl  enable  mysqld
+```
+
+
+:TODO ПРОВЕРИТЬ! ПОХЖЕ НФТЭЙБЛ только в виртуалке!
 
 Установи FirewallD на нужных серверах
 ---
 ```
-sudo yum install -y firewalld
-sudo service firewalld start
-sudo systemctl enable firewalld
+sudo  yum  install  -y  firewalld
+sudo  service  firewalld  start
+sudo  systemctl  enable  firewalld
 ```
 
+##### sudo firewall-cmd --zone=public --add-port=5000/tcp
+
+Настрой FirewallD для базы и продуктового веб-сервера
+---
 
 
-sudo firewall-cmd --zone=public --add-port=5000/tcp
 
 
 
 
-## ✨ Codebase structure
-
-The project has a simple structure, represented as bellow:
+## ✨ Структура кода
 
 ```bash
 < PROJECT ROOT >
@@ -158,4 +190,3 @@ The project has a simple structure, represented as bellow:
 <br />
 
 ---
-[Flask Stripe Sample](https://blog.appseed.us/flask-stripe-open-source-mini-ecommerce/) - Free sample provided by [AppSeed](https://appseed.us).
