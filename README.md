@@ -20,11 +20,11 @@
 ## ⚠️ Внимание! Дальше идет решение.
 
 
-Если установка с единой компоновкой, мы переходим на `srv01`, иначе на `db01`
+Если установка с единой компоновкой, мы остаёмся на `controller`, иначе переходим на на `db01`
 ---
 
 ```
-ssh produser@srv01
+ssh db01
 ```
 
 Установка MySQL
@@ -32,10 +32,10 @@ ssh produser@srv01
 
 ```
 curl  -L  https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm  -O
-sudo dnf  install  -y  mysql80-community-release-el9-1.noarch.rpm
-sudo dnf  install  -y  mysql-server
-sudo systemctl  start  mysqld
-sudo systemctl  enable  mysqld
+sudo  dnf  install  -y  mysql80-community-release-el9-1.noarch.rpm
+sudo  dnf  install  -y  mysql-server
+sudo  systemctl  start  mysqld
+sudo  systemctl  enable  mysqld
 ```
 
 Получение root-пароля MySQL
@@ -49,7 +49,7 @@ sudo  cat  /var/log/mysqld.log
 ---
 
 ```
-mysql -uroot -p
+mysql  -uroot  -p
 ```
 
 Установить новый пароль root
