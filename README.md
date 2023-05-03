@@ -70,11 +70,11 @@ GRANT  ALL PRIVILEGES  ON  shop.*  TO  "produser"@"localhost";
 >‼️ Пользователь и база в задании могут быть другими!
 
 
-Если установка с распределенной компоновкой, мы переходим на `app01`
+Если установка с распределенной компоновкой, мы переходим на `srv01`
 ---
 
 ```
-ssh  produser@app01
+ssh  produser@srv01
 ```
 
 
@@ -98,7 +98,7 @@ git  clone  https://github.com/rotoro-cloud/ecommerce-flask-stripe.git
 
 ```
 sudo  mv  ecommerce-flask-stripe/  /opt/ecommerce-flask-stripe/
-sudo  chown  moon:moon  /opt/ecommerce-flask-stripe/
+sudo  chown  produser:produser  /opt/ecommerce-flask-stripe/
 pip  install  -r  requirements.txt
 ```
 
@@ -140,7 +140,7 @@ Description=Gunicorn-server for ecommerce
 After=network.target
 
 [Service]
-User=moon
+User=produser
 WorkingDirectory=/opt/ecommerce-flask-stripe/
 ExecStart=gunicorn  run:app
 
