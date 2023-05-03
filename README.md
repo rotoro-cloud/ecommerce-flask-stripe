@@ -32,8 +32,8 @@ ssh produser@srv01
 
 ```
 curl  -L  https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm  -O
-sudo dnf  install  mysql80-community-release-el9-1.noarch.rpm -y
-sudo dnf  install  mysql-server  -y
+sudo dnf  install  -y  mysql80-community-release-el9-1.noarch.rpm
+sudo dnf  install  -y  mysql-server
 sudo systemctl  start  mysqld
 sudo systemctl  enable  mysqld
 ```
