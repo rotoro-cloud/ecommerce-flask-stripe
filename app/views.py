@@ -133,8 +133,8 @@ def create_checkout_session(path):
         return jsonify(error=str(e)), 403
 
 # Product Index
-@app.route('/',          defaults={'path': 'products/index.html'})
-@app.route('/products/', defaults={'path': 'products/index.html'})
+@app.route('/', defaults={'path': 'pages/index.html'},strict_slashes=False)
+@app.route('/products/', defaults={'path': 'products/index.html'},strict_slashes=False)
 def products_index(path):
 
     # Collect Products
