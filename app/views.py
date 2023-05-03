@@ -170,7 +170,7 @@ def product_info(path):
         return render_template( 'pages/page-404.html')
 
 # App main route + generic routing
-@app.route('/<path>')
+@app.route('/<path>', strict_slashes=False)
 def index(path):
 
     try:
@@ -182,7 +182,7 @@ def index(path):
         return render_template('pages/page-404.html'), 404
 
 
-@app.route('/load-products/', methods=['GET', 'POST'])
+@app.route('/load-products/', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def load_product_json():
     json_data = []
