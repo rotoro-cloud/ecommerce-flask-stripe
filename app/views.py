@@ -176,7 +176,7 @@ def index(path):
     try:
 
         # Serve the file (if exists) from app/templates/FILE.html
-        return render_template( 'pages/' + path )
+        return render_template( 'pages/' + path + '/' )
     
     except TemplateNotFound:
         return render_template('pages/page-404.html'), 404
