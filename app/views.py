@@ -157,7 +157,7 @@ def products_index(path):
     # Render Products Page
     return render_template( 'ecommerce/index.html', 
                             products=products, 
-                            featured_product=load_product_by_slug('featured') )
+                            featured_product=load_product_by_slug('featured/') )
 
 # List Product
 @app.route('/products/<path>/', strict_slashes=False)
