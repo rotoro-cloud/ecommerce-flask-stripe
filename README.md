@@ -77,7 +77,6 @@ GRANT  ALL PRIVILEGES  ON  shop.*  TO  "produser"@"localhost";
 ssh  produser@srv01
 ```
 
-
 Установка зависимостей Python
 ---
 
@@ -93,12 +92,20 @@ sudo  yum  -y  install  git
 git  clone  https://github.com/rotoro-cloud/ecommerce-flask-stripe.git
 ```
 
-Разрешение зависимостей приложения
+Если пользователь службы будет отличаться от залогиненого, стоит действовать от лица того юзера
 ---
 
 ```
 sudo  mv  ecommerce-flask-stripe/  /opt/ecommerce-flask-stripe/
-sudo  chown  produser:produser  /opt/ecommerce-flask-stripe/
+sudo  chown  -R  regularuser:regularuser  /opt/ecommerce-flask-stripe/
+su regularuser
+```
+
+Разрешение зависимостей приложения
+---
+
+```
+cd  /opt/ecommerce-flask-stripe/
 pip  install  -r  requirements.txt
 ```
 
@@ -140,9 +147,9 @@ Description=Gunicorn-server for ecommerce
 After=network.target
 
 [Service]
-User=produser
+User=regularuser
 WorkingDirectory=/opt/ecommerce-flask-stripe/
-ExecStart=gunicorn  run:app
+ExecStart=/home/regularuser/.local/bin/gunicorn run:app
 
 [Install]
 WantedBy=multi-user.target
